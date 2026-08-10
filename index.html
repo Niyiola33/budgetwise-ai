@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BudgetWise AI | Personal Finance Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <script defer type="module" src="js/app.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+<header class="hero">
+
+    <div class="logo">
+
+        <h1>💰 BudgetWise AI</h1>
+
+        <p id="welcome-message"></p>
+
+    </div>
+
+    <div class="nav-actions">
+
+        <button id="theme-btn">
+            🌙 Dark Mode
+        </button>
+
+        <button id="export-btn">
+            📤 Export
+        </button>
+
+        <button id="clear-btn" class="danger-btn">
+            🗑 Clear
+        </button>
+
+    </div>
+
+</header>
+
+<main>
+
+    <!-- Dashboard -->
+
+    <section class="dashboard">
+
+        <div class="card balance">
+
+            <h3>Current Balance</h3>
+
+            <h2 id="balance">₦0.00</h2>
+
+        </div>
+
+        <div class="card income">
+
+            <h3>Total Income</h3>
+
+            <h2 id="income">₦0.00</h2>
+
+        </div>
+
+        <div class="card expense">
+
+            <h3>Total Expenses</h3>
+
+            <h2 id="expense">₦0.00</h2>
+
+        </div>
+
+    </section>
+
+    <section class="budget-section">
+
+    <h2>Monthly Budget</h2>
+
+    <div class="budget-input">
+
+        <input
+            type="number"
+            id="budget-input"
+            placeholder="Enter monthly budget"
+        >
+
+        <button id="save-budget-btn">
+            Save Budget
+        </button>
+
+    </div>
+
+    <div class="budget-summary">
+
+        <p>
+            Budget:
+            <span id="budget-total">₦0</span>
+        </p>
+
+        <p>
+            Remaining:
+            <span id="budget-remaining">₦0</span>
+        </p>
+
+        <p id="budget-status">
+            No budget set
+        </p>
+
+    </div>
+
+    <div class="progress-bar">
+
+        <div
+            class="progress-fill"
+            id="progress-fill">
+        </div>
+
+    </div>
+
+</section>
+
+<section class="charts-section">
+
+    <div class="chart-card">
+
+        <h2>Income vs Expenses</h2>
+
+        <canvas id="incomeExpenseChart"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h2>Expenses by Category</h2>
+
+        <canvas id="categoryChart"></canvas>
+
+    </div>
+
+</section>
+
+<section class="analytics-section">
+
+    <h2>📊 Analytics</h2>
+
+    <div class="analytics-grid">
+
+        <div class="analytics-card">
+            <h3>Total Transactions</h3>
+            <p id="total-transactions">0</p>
+        </div>
+
+        <div class="analytics-card">
+            <h3>Largest Expense</h3>
+            <p id="largest-expense">₦0</p>
+        </div>
+
+        <div class="analytics-card">
+            <h3>Average Expense</h3>
+            <p id="average-expense">₦0</p>
+        </div>
+
+        <div class="analytics-card">
+            <h3>Most Used Category</h3>
+            <p id="top-category">None</p>
+        </div>
+
+    </div>
+
+    <section class="health-section">
+
+    <h2>🏆 Financial Health Score</h2>
+
+    <div class="health-card">
+
+        <h1 id="health-score">0</h1>
+
+        <p id="health-message">
+            No data yet.
+        </p>
+
+    </div>
+
+</section>
+
+    <section class="insights-section">
+
+    <h2>🧠 Smart Financial Insights</h2>
+
+    <div id="insights-container">
+
+        <p>No insights yet.</p>
+
+    </div>
+
+</section>
+</section>
+
+<section class="import-section">
+
+    <h2>🏦 Import Bank Statement</h2>
+
+    <input
+        type="file"
+        id="csv-file"
+        accept=".csv"
+    >
+
+    <button id="import-btn">
+        Import CSV
+    </button>
+
+</section>
+
+
+    <!-- Transaction Form -->
+
+    <section class="form-section">
+
+        <h2>Add Transaction</h2>
+
+        <form id="transaction-form">
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Transaction Title"
+                required
+            >
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="Amount"
+                required
+            >
+
+            <select id="type">
+
+                <option value="income">Income</option>
+
+                <option value="expense">Expense</option>
+
+            </select>
+
+            <input
+                type="text"
+                id="category"
+                placeholder="Category"
+                required
+            >
+
+            <input
+                type="date"
+                id="date"
+                required
+            >
+
+<button type="submit" id="submit-btn">
+    Add Transaction
+</button>
+        </form>
+
+    </section>
+
+  <div class="filters">
+
+    <input
+        type="text"
+        id="search-input"
+        placeholder="Search transaction..."
+    >
+
+    <select id="filter-category">
+
+        <option value="all">All Categories</option>
+
+        <option>Food</option>
+
+        <option>Transport</option>
+
+        <option>Bills</option>
+
+        <option>Entertainment</option>
+
+        <option>Salary</option>
+
+        <option>Shopping</option>
+
+        <option>Other</option>
+
+    </select>
+
+    <input
+        type="date"
+        id="filter-date"
+    >
+
+</div>
+
+    <!-- Transaction List -->
+
+    <section class="transactions">
+
+        <h2>Recent Transactions</h2>
+<div id="transaction-list">
+
+</div>
+    </section>
+
+</main>
+
+<footer>
+
+    <p>
+
+        © 2026 BudgetWise AI
+
+        <br>
+
+        Built with ❤️ using HTML, CSS & JavaScript
+
+    </p>
+
+</footer>
+
+<div id="toast"></div>
+
+</div>
+</body>
+
+
+</html>
