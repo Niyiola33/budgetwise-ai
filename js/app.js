@@ -7,6 +7,13 @@ import {
     loadTheme
 } from "./storage.js";
 
+import {
+    getTransactions,
+    createTransaction,
+    updateTransaction,
+    deleteTransactionAPI
+} from "./utils.js";
+
 const searchInput = document.getElementById("search-input");
 
 const filterCategory = document.getElementById("filter-category");
