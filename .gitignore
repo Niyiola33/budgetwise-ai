@@ -1,3 +1,18 @@
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Django
+*.sqlite3
+
+# Environment variables
+.env
